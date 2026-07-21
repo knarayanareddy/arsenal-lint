@@ -1,0 +1,8 @@
+node_modules/
+.pnpm-store/
+dist/
+output/
+outputs/
+.env
+.DS_Store
+full-dataset-validation.json

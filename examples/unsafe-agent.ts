@@ -1,0 +1,1 @@
+defineAgent({ roles: [{ id: "executor", tools: ["inspect", "apply_change"], irreversible_tools: ["apply_change"] }], runtime: { max_steps: 50, retry_cap: 3 }, guardrails: { human_approval_for: [], kill_switch: true } });

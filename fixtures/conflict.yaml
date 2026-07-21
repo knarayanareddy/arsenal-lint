@@ -1,0 +1,22 @@
+policy:
+  name: "Broad Multi-Tool Agent"
+  version: "0.9.0"
+  roles:
+    - id: planner
+      tools: [inspect, propose, search, summarize, classify, extract, translate, draft]
+    - id: executor
+      tools: [apply_change, inspect, send, fetch, transform, validate, notify, archive, delete, merge, publish, export]
+      irreversible_tools: [apply_change, delete]
+  runtime:
+    max_steps: 50
+    wall_clock_timeout_sec: 300
+    token_budget: 200000
+    cost_budget_usd: 2.00
+    retry_cap: 3
+  guardrails:
+    human_approval_for: []
+    ssrf_guard: true
+    sandbox_code_exec: true
+    kill_switch: true
+  claims: []
+  catalog_commit: "ca724eb19ae55efc04611817452b5c8e00ec9f2d"

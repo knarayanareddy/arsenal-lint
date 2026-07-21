@@ -1,0 +1,189 @@
+{
+  "meta": {
+    "schema_version": "1.0.0",
+    "name": "ArsenalLint rule map",
+    "description": "Curated, versioned predicate set over AI-Arsenal tip IDs (ESLint-style, not auto-derived). Single source of truth alongside RULES.md.",
+    "catalog_repo": "https://github.com/knarayanareddy/AI-Arsenal.git",
+    "catalog_commit": "ca724eb19ae55efc04611817452b5c8e00ec9f2d",
+    "catalog_data_file": "data/tips.json",
+    "catalog_data_shape": "{ schema_version, generated_at, count, items:[{ id, title, category, impact, verification_status, enrichment_status, ... }] }",
+    "weight_formula": "weight = impact_rank(impact) * verification_conf(verification_status)",
+    "impact_rank": {
+      "transformative": 4,
+      "high": 3,
+      "medium": 2,
+      "low": 1
+    },
+    "verification_conf": {
+      "production-verified": 1.0,
+      "lab-verified": 0.8,
+      "community-reported": 0.6,
+      "theoretical": 0.3
+    },
+    "status_logic": {
+      "FAIL": "any required (capability-inferred) rule violated",
+      "WARN": "all required gates pass BUT unsubstantiated_claims non-empty OR the policy has substantiated claims and none is production-verified/reviewed",
+      "PASS": "all required gates pass, no unsubstantiated claims, and claims are absent or include a production-verified/reviewed tip"
+    },
+    "seal_formula": "sha256( canonical_json(policy_without_seal) + '\\n' + cited_tips_sorted.join(',') + '\\n' + loaded_catalog_commit )",
+    "catalog_pin_policy": "The loaded catalog commit is authoritative. Reject policy.catalog_commit when it differs; use loaded_catalog_commit in the seal."
+  },
+  "rules": [
+    {
+      "id": "R1",
+      "arsenal_tip_id": "require-human-approval-for-irreversible-actions",
+      "severity_source": "impact",
+      "predicate": "forall role in policy.roles: forall t in (role.irreversible_tools or []): t in policy.guardrails.human_approval_for",
+      "evidence_template": "irreversible tool '{tool}' exposed without human_approval_for gate",
+      "fixture_trigger": "fail.yaml and conflict.yaml (guardrails.human_approval_for is [])",
+      "weight_inputs": {
+        "impact": "high",
+        "verification": "production-verified",
+        "weight": 3.0
+      }
+    },
+    {
+      "id": "R2",
+      "arsenal_tip_id": "allowlist-tools-per-agent-role",
+      "severity_source": "impact",
+      "predicate": "forall role in policy.roles: role.tools is a non-empty array",
+      "evidence_template": "role '{role}' exposes tools without an explicit allowlist",
+      "fixture_trigger": "dedicated unit test (role with omitted/null tools) \u2014 golden fixtures keep allowlists explicit",
+      "weight_inputs": {
+        "impact": "high",
+        "verification": "community-reported",
+        "weight": 1.8
+      }
+    },
+    {
+      "id": "R3",
+      "arsenal_tip_id": "set-a-token-and-cost-budget-per-agent-run",
+      "severity_source": "impact",
+      "predicate": "policy.runtime.token_budget is a number > 0",
+      "evidence_template": "token_budget is null/0; token spend unbounded",
+      "fixture_trigger": "fail.yaml (runtime.token_budget: null)",
+      "weight_inputs": {
+        "impact": "high",
+        "verification": "community-reported",
+        "weight": 1.8
+      }
+    },
+    {
+      "id": "R4",
+      "arsenal_tip_id": "set-a-token-and-cost-budget-per-agent-run",
+      "severity_source": "impact",
+      "predicate": "policy.runtime.cost_budget_usd is a number > 0",
+      "evidence_template": "cost_budget_usd is null/0; spend uncapped",
+      "fixture_trigger": "fail.yaml (runtime.cost_budget_usd: null)",
+      "weight_inputs": {
+        "impact": "high",
+        "verification": "community-reported",
+        "weight": 1.8
+      }
+    },
+    {
+      "id": "R5",
+      "arsenal_tip_id": "add-a-max-step-budget-to-every-agent",
+      "severity_source": "impact",
+      "predicate": "policy.runtime.max_steps is a finite number > 0",
+      "evidence_template": "max_steps is null/unbounded; agent can loop indefinitely",
+      "fixture_trigger": "fail.yaml (runtime.max_steps: null)",
+      "weight_inputs": {
+        "impact": "high",
+        "verification": "production-verified",
+        "weight": 3.0
+      }
+    },
+    {
+      "id": "R6",
+      "arsenal_tip_id": "set-wall-clock-timeouts-for-agent-runs",
+      "severity_source": "impact",
+      "predicate": "policy.runtime.wall_clock_timeout_sec is a number > 0",
+      "evidence_template": "wall_clock_timeout_sec is null; run can hang",
+      "fixture_trigger": "fail.yaml (runtime.wall_clock_timeout_sec: null)",
+      "weight_inputs": {
+        "impact": "high",
+        "verification": "community-reported",
+        "weight": 1.8
+      }
+    },
+    {
+      "id": "R7",
+      "arsenal_tip_id": "keep-a-kill-switch-for-agent-actions",
+      "severity_source": "impact",
+      "predicate": "policy.guardrails.kill_switch === true",
+      "evidence_template": "kill_switch is false; cannot halt runaway agent",
+      "fixture_trigger": "fail.yaml (guardrails.kill_switch: false)",
+      "weight_inputs": {
+        "impact": "high",
+        "verification": "production-verified",
+        "weight": 3.0
+      }
+    },
+    {
+      "id": "R8",
+      "arsenal_tip_id": "block-ssrf-by-validating-outbound-urls",
+      "severity_source": "impact",
+      "predicate": "policy.guardrails.ssrf_guard === true",
+      "evidence_template": "ssrf_guard is false; outbound tool URLs unvalidated",
+      "fixture_trigger": "fail.yaml (guardrails.ssrf_guard: false)",
+      "weight_inputs": {
+        "impact": "high",
+        "verification": "community-reported",
+        "weight": 1.8
+      }
+    },
+    {
+      "id": "R9",
+      "arsenal_tip_id": "sandbox-model-generated-code-execution",
+      "severity_source": "impact",
+      "predicate": "if (policy.runtime.code_exec_tools or []) non-empty: policy.guardrails.sandbox_code_exec === true",
+      "evidence_template": "code-executing tool(s) {tools} present without sandbox_code_exec",
+      "fixture_trigger": "dedicated unit test (code_exec_tools set + sandbox_code_exec false) \u2014 golden fixtures have no code-exec tool",
+      "weight_inputs": {
+        "impact": "high",
+        "verification": "community-reported",
+        "weight": 1.8
+      }
+    },
+    {
+      "id": "R10",
+      "arsenal_tip_id": "cap-agent-tool-retries",
+      "severity_source": "impact",
+      "predicate": "policy.runtime.retry_cap is a finite number > 0",
+      "evidence_template": "retry_cap is null; agent can retry a broken tool infinitely",
+      "fixture_trigger": "fail.yaml (runtime.retry_cap: null)",
+      "weight_inputs": {
+        "impact": "high",
+        "verification": "production-verified",
+        "weight": 3.0
+      }
+    },
+    {
+      "id": "R11",
+      "arsenal_tip_id": "budget-context-before-adding-tools",
+      "severity_source": "impact",
+      "predicate": "distinct_tool_count(policy) > 8 IMPLIES (policy.runtime.token_budget > 0 AND policy.runtime.context_compaction === true)",
+      "evidence_template": "policy exposes {n} tools with no context_compaction; context-overflow risk",
+      "fixture_trigger": "conflict.yaml (19 distinct tools, runtime.context_compaction absent)",
+      "weight_inputs": {
+        "impact": "medium",
+        "verification": "theoretical",
+        "weight": 0.6
+      }
+    },
+    {
+      "id": "R12",
+      "arsenal_tip_id": "(meta / attestation engine)",
+      "severity_source": "claimed_tip_impact",
+      "predicate": "forall c in (policy.claims or []): rule_for_tip(c) passes (policy enforces c)",
+      "evidence_template": "claims tip '{tip}' but policy does not enforce it (unsubstantiated claim)",
+      "fixture_trigger": "fail.yaml (claims require-human-approval-for-irreversible-actions but human_approval_for is empty)",
+      "weight_inputs": {
+        "impact": "n/a",
+        "verification": "n/a",
+        "weight": null
+      }
+    }
+  ]
+}

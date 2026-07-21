@@ -1,0 +1,128 @@
+{
+  "policy": "fail",
+  "status": "FAIL",
+  "findings": [
+    {
+      "rule": "R1",
+      "arsenal_tip_id": "require-human-approval-for-irreversible-actions",
+      "severity": "high",
+      "weight": 3.0,
+      "evidence": "irreversible tool 'apply_change' exposed without human_approval_for gate",
+      "verification_status": "production-verified"
+    },
+    {
+      "rule": "R5",
+      "arsenal_tip_id": "add-a-max-step-budget-to-every-agent",
+      "severity": "high",
+      "weight": 3.0,
+      "evidence": "max_steps is null/unbounded; agent can loop indefinitely",
+      "verification_status": "production-verified"
+    },
+    {
+      "rule": "R7",
+      "arsenal_tip_id": "keep-a-kill-switch-for-agent-actions",
+      "severity": "high",
+      "weight": 3.0,
+      "evidence": "kill_switch is false; cannot halt runaway agent",
+      "verification_status": "production-verified"
+    },
+    {
+      "rule": "R10",
+      "arsenal_tip_id": "cap-agent-tool-retries",
+      "severity": "high",
+      "weight": 3.0,
+      "evidence": "retry_cap is null; agent can retry a broken tool infinitely",
+      "verification_status": "production-verified"
+    },
+    {
+      "rule": "R3",
+      "arsenal_tip_id": "set-a-token-and-cost-budget-per-agent-run",
+      "severity": "high",
+      "weight": 1.8,
+      "evidence": "token_budget is null/0; token spend unbounded",
+      "verification_status": "community-reported"
+    },
+    {
+      "rule": "R4",
+      "arsenal_tip_id": "set-a-token-and-cost-budget-per-agent-run",
+      "severity": "high",
+      "weight": 1.8,
+      "evidence": "cost_budget_usd is null/0; spend uncapped",
+      "verification_status": "community-reported"
+    },
+    {
+      "rule": "R6",
+      "arsenal_tip_id": "set-wall-clock-timeouts-for-agent-runs",
+      "severity": "high",
+      "weight": 1.8,
+      "evidence": "wall_clock_timeout_sec is null; run can hang",
+      "verification_status": "community-reported"
+    },
+    {
+      "rule": "R8",
+      "arsenal_tip_id": "block-ssrf-by-validating-outbound-urls",
+      "severity": "high",
+      "weight": 1.8,
+      "evidence": "ssrf_guard is false; outbound tool URLs unvalidated",
+      "verification_status": "community-reported"
+    }
+  ],
+  "unsubstantiated_claims": [
+    "require-human-approval-for-irreversible-actions"
+  ],
+  "cited_tips": [
+    "add-a-max-step-budget-to-every-agent",
+    "block-ssrf-by-validating-outbound-urls",
+    "cap-agent-tool-retries",
+    "keep-a-kill-switch-for-agent-actions",
+    "require-human-approval-for-irreversible-actions",
+    "set-a-token-and-cost-budget-per-agent-run",
+    "set-wall-clock-timeouts-for-agent-runs"
+  ],
+  "seal": null,
+  "remediation_plan": null,
+  "trust_badges": [
+    {
+      "arsenal_tip_id": "add-a-max-step-budget-to-every-agent",
+      "impact": "high",
+      "verification_status": "production-verified",
+      "enrichment_status": "reviewed"
+    },
+    {
+      "arsenal_tip_id": "block-ssrf-by-validating-outbound-urls",
+      "impact": "high",
+      "verification_status": "community-reported",
+      "enrichment_status": "draft"
+    },
+    {
+      "arsenal_tip_id": "cap-agent-tool-retries",
+      "impact": "high",
+      "verification_status": "production-verified",
+      "enrichment_status": "reviewed"
+    },
+    {
+      "arsenal_tip_id": "keep-a-kill-switch-for-agent-actions",
+      "impact": "high",
+      "verification_status": "production-verified",
+      "enrichment_status": "reviewed"
+    },
+    {
+      "arsenal_tip_id": "require-human-approval-for-irreversible-actions",
+      "impact": "high",
+      "verification_status": "production-verified",
+      "enrichment_status": "reviewed"
+    },
+    {
+      "arsenal_tip_id": "set-a-token-and-cost-budget-per-agent-run",
+      "impact": "high",
+      "verification_status": "community-reported",
+      "enrichment_status": "draft"
+    },
+    {
+      "arsenal_tip_id": "set-wall-clock-timeouts-for-agent-runs",
+      "impact": "high",
+      "verification_status": "community-reported",
+      "enrichment_status": "draft"
+    }
+  ]
+}
