@@ -43,7 +43,7 @@ pnpm arsenallint gate --policy fixtures/pass.yaml --source examples/hardened-age
 pnpm arsenallint guard fixtures/pass.yaml --source examples/hardened-agent.ts
 pnpm arsenallint replay fixtures/pass.yaml fixtures/traces/adversarial.jsonl
 pnpm arsenallint keygen --out output/keys
-pnpm arsenallint attest fixtures/pass.yaml --source examples/hardened-agent.ts --trace fixtures/traces/adversarial.jsonl --private-key output/keys/private.pem --public-key output/keys/public.pem --out output/receipt.json
+pnpm arsenallint attest fixtures/pass.yaml --source examples/hardened-agent.ts --trace fixtures/traces/adversarial.jsonl --private-key output/keys/private.pem --out output/receipt.json
 pnpm arsenallint verify output/receipt.json --policy fixtures/pass.yaml --source examples/hardened-agent.ts --trace fixtures/traces/adversarial.jsonl --public-key output/keys/public.pem
 pnpm arsenallint demo
 ```
