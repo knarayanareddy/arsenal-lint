@@ -10,5 +10,13 @@ jobs:
         with: { node-version: 22, cache: pnpm }
       - run: pnpm install --frozen-lockfile
       - run: pnpm build && pnpm test && pnpm demo:ci
+      - run: pnpm arsenallint gate --policy fixtures/pass.yaml --source examples/hardened-agent.ts
+      - run: |
+          set +e
+          result="$(pnpm arsenallint gate --policy fixtures/pass.yaml --source examples/unsafe-agent.ts 2>&1)"
+          status=$?
+          set -e
+          test "$status" -eq 1
+          printf '%s\n' "$result" | grep -q 'source-approval-wrapper-absent'
       - uses: actions/upload-artifact@v4
         with: { name: arsenallint-report, path: output/arsenallint-report.html }
