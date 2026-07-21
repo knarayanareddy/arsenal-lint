@@ -52,6 +52,14 @@ The concise narrated walkthrough is in [docs/demo-script.md](docs/demo-script.md
 
 Receipts use Ed25519 and bind policy and capability digests, cited tips, portable Git/fixture catalog provenance and content digest, source commit and source-content digest, rule result, and replay result. Attestation rejects source-policy contradictions; `gate` is the CI policy/source check. Tampering with any bound input makes verification fail. Signatures establish payload integrity and key possession—not safety, signer trust, or deployment correctness.
 
+## License
+
+ArsenalLint code is licensed under the MIT License. See [LICENSE](LICENSE).
+
+Bundled Arsenal fixture/catalog content is derived from [AI-Arsenal](https://github.com/knarayanareddy/AI-Arsenal) at commit `ca724eb19ae55efc04611817452b5c8e00ec9f2d` and is licensed under CC-BY-4.0. See [LICENSE-CONTENT](LICENSE-CONTENT).
+
+Attribution does not imply upstream endorsement.
+
 ## Limits and development evidence
 
 `RULES.md`, `rules.map.json`, and the golden fixtures are the evaluator contract. The runtime guard protects only calls routed through it. Replay is deterministic for the hand-authored JSONL trace and does not reproduce model or external-service nondeterminism. The report’s trust badges expose catalog provenance; independent findings are a ranked remediation plan, never tip contradictions.
