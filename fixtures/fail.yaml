@@ -1,0 +1,23 @@
+policy:
+  name: "Bounded Multi-Tool Agent (broken)"
+  version: "0.0.1"
+  roles:
+    - id: planner
+      tools: [inspect, propose]
+    - id: executor
+      tools: [apply_change, inspect]
+      irreversible_tools: [apply_change]
+  runtime:
+    max_steps: null
+    wall_clock_timeout_sec: null
+    token_budget: null
+    cost_budget_usd: null
+    retry_cap: null
+  guardrails:
+    human_approval_for: []
+    ssrf_guard: false
+    sandbox_code_exec: true
+    kill_switch: false
+  claims:
+    - require-human-approval-for-irreversible-actions
+  catalog_commit: "ca724eb19ae55efc04611817452b5c8e00ec9f2d"

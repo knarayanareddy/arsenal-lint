@@ -1,0 +1,11 @@
+{"catalog_commit":"ca724eb19ae55efc04611817452b5c8e00ec9f2d","items":[
+{"id":"require-human-approval-for-irreversible-actions","impact":"high","verification_status":"production-verified","enrichment_status":"reviewed"},
+{"id":"allowlist-tools-per-agent-role","impact":"high","verification_status":"community-reported","enrichment_status":"draft"},
+{"id":"set-a-token-and-cost-budget-per-agent-run","impact":"high","verification_status":"community-reported","enrichment_status":"draft"},
+{"id":"add-a-max-step-budget-to-every-agent","impact":"high","verification_status":"production-verified","enrichment_status":"reviewed"},
+{"id":"set-wall-clock-timeouts-for-agent-runs","impact":"high","verification_status":"community-reported","enrichment_status":"draft"},
+{"id":"keep-a-kill-switch-for-agent-actions","impact":"high","verification_status":"production-verified","enrichment_status":"reviewed"},
+{"id":"block-ssrf-by-validating-outbound-urls","impact":"high","verification_status":"community-reported","enrichment_status":"draft"},
+{"id":"sandbox-model-generated-code-execution","impact":"high","verification_status":"community-reported","enrichment_status":"draft"},
+{"id":"cap-agent-tool-retries","impact":"high","verification_status":"production-verified","enrichment_status":"reviewed"},
+{"id":"budget-context-before-adding-tools","impact":"medium","verification_status":"theoretical","enrichment_status":"draft"}]}

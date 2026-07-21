@@ -1,0 +1,5 @@
+{"role":"executor","tool":"apply_change","approved":false,"tokens":1,"cost":0.01}
+{"role":"executor","tool":"inspect","tokens":1,"cost":0.01}
+{"role":"executor","tool":"inspect","tokens":1,"cost":0.01}
+{"role":"executor","tool":"inspect","tokens":1,"cost":0.01}
+{"role":"executor","tool":"inspect","tokens":1,"cost":0.01}

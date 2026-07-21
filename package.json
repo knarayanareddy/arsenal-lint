@@ -1,0 +1,17 @@
+{
+  "name": "arsenal-lint",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@9.15.9",
+  "engines": { "node": ">=22.0.0", "pnpm": ">=9.0.0" },
+  "scripts": {
+    "build": "tsc --noEmit",
+    "test": "node --experimental-strip-types --test tests/*.test.ts",
+    "arsenallint": "node --experimental-strip-types src/arsenallint-cli.ts",
+    "demo": "node --experimental-strip-types src/arsenallint-cli.ts demo",
+    "demo:ci": "ARSENAL_DATA_PATH=fixtures/catalog node --experimental-strip-types src/arsenallint-cli.ts demo"
+  },
+  "dependencies": {},
+  "devDependencies": { "@types/node": "^22.15.0", "typescript": "^5.8.3" }
+}

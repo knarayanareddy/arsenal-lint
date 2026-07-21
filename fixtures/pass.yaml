@@ -1,0 +1,28 @@
+policy:
+  name: "Bounded Multi-Tool Agent"
+  version: "1.0.0"
+  roles:
+    - id: planner
+      tools: [inspect, propose]
+    - id: executor
+      tools: [apply_change, inspect]
+      irreversible_tools: [apply_change]
+  runtime:
+    max_steps: 50
+    wall_clock_timeout_sec: 300
+    token_budget: 200000
+    cost_budget_usd: 2.00
+    retry_cap: 3
+  guardrails:
+    human_approval_for: [apply_change]
+    ssrf_guard: true
+    sandbox_code_exec: true
+    kill_switch: true
+  claims:
+    - require-human-approval-for-irreversible-actions
+    - allowlist-tools-per-agent-role
+    - add-a-max-step-budget-to-every-agent
+    - keep-a-kill-switch-for-agent-actions
+    - cap-agent-tool-retries
+    - set-a-token-and-cost-budget-per-agent-run
+  catalog_commit: "ca724eb19ae55efc04611817452b5c8e00ec9f2d"

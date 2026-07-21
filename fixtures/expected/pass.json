@@ -1,0 +1,68 @@
+{
+  "policy": "pass",
+  "status": "PASS",
+  "findings": [],
+  "unsubstantiated_claims": [],
+  "cited_tips": [
+    "add-a-max-step-budget-to-every-agent",
+    "allowlist-tools-per-agent-role",
+    "block-ssrf-by-validating-outbound-urls",
+    "cap-agent-tool-retries",
+    "keep-a-kill-switch-for-agent-actions",
+    "require-human-approval-for-irreversible-actions",
+    "set-a-token-and-cost-budget-per-agent-run",
+    "set-wall-clock-timeouts-for-agent-runs"
+  ],
+  "seal": null,
+  "remediation_plan": null,
+  "trust_badges": [
+    {
+      "arsenal_tip_id": "add-a-max-step-budget-to-every-agent",
+      "impact": "high",
+      "verification_status": "production-verified",
+      "enrichment_status": "reviewed"
+    },
+    {
+      "arsenal_tip_id": "allowlist-tools-per-agent-role",
+      "impact": "high",
+      "verification_status": "community-reported",
+      "enrichment_status": "draft"
+    },
+    {
+      "arsenal_tip_id": "block-ssrf-by-validating-outbound-urls",
+      "impact": "high",
+      "verification_status": "community-reported",
+      "enrichment_status": "draft"
+    },
+    {
+      "arsenal_tip_id": "cap-agent-tool-retries",
+      "impact": "high",
+      "verification_status": "production-verified",
+      "enrichment_status": "reviewed"
+    },
+    {
+      "arsenal_tip_id": "keep-a-kill-switch-for-agent-actions",
+      "impact": "high",
+      "verification_status": "production-verified",
+      "enrichment_status": "reviewed"
+    },
+    {
+      "arsenal_tip_id": "require-human-approval-for-irreversible-actions",
+      "impact": "high",
+      "verification_status": "production-verified",
+      "enrichment_status": "reviewed"
+    },
+    {
+      "arsenal_tip_id": "set-a-token-and-cost-budget-per-agent-run",
+      "impact": "high",
+      "verification_status": "community-reported",
+      "enrichment_status": "draft"
+    },
+    {
+      "arsenal_tip_id": "set-wall-clock-timeouts-for-agent-runs",
+      "impact": "high",
+      "verification_status": "community-reported",
+      "enrichment_status": "draft"
+    }
+  ]
+}

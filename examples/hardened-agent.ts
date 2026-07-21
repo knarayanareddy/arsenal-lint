@@ -1,0 +1,1 @@
+defineAgent({ roles: [{ id: "executor", tools: ["inspect", "apply_change"], irreversible_tools: ["apply_change"] }], runtime: { max_steps: 50, retry_cap: 3, token_budget: 200000, cost_budget_usd: 2 }, guardrails: { human_approval_for: ["apply_change"], kill_switch: true, ssrf_guard: true, sandbox_code_exec: true } });
